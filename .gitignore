@@ -1,0 +1,15 @@
+# Video files - too large for git
+videos/
+
+# macOS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# Node modules (if added later)
+node_modules/
+
+# Logs
+*.log
