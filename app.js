@@ -35,6 +35,7 @@ let player = null;
 let isPlayerReady = false;
 
 // DOM Elements
+const introOverlay = document.getElementById('introOverlay');
 const mainVideo = document.getElementById('mainVideo');
 const controlPanel = document.getElementById('controlPanel');
 const togglePanelBtn = document.getElementById('togglePanelBtn');
@@ -87,6 +88,11 @@ function init() {
 
     // Start in fullscreen mode
     requestFullscreen();
+
+    // Hide intro after 4.5 seconds
+    setTimeout(() => {
+        introOverlay.classList.add('hidden');
+    }, 4500);
 }
 
 // Video Management
