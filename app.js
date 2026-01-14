@@ -36,6 +36,7 @@ let isPlayerReady = false;
 
 // DOM Elements
 const introOverlay = document.getElementById('introOverlay');
+const subscriptionOverlay = document.getElementById('subscriptionOverlay');
 const mainVideo = document.getElementById('mainVideo');
 const controlPanel = document.getElementById('controlPanel');
 const togglePanelBtn = document.getElementById('togglePanelBtn');
@@ -51,6 +52,17 @@ const videoVolumeValue = document.getElementById('videoVolumeValue');
 const videoCount = document.getElementById('videoCount');
 const currentVideoDisplay = document.getElementById('currentVideo');
 const statusIndicator = document.getElementById('statusIndicator');
+const bottomBanner = document.getElementById('bottomBanner');
+const topBanner = document.getElementById('topBanner');
+const leftBanner = document.getElementById('leftBanner');
+const rightBanner = document.getElementById('rightBanner');
+
+// Banner rotation - group as pairs
+let currentBannerGroupIndex = 0;
+const bannerGroups = [
+    [topBanner, bottomBanner],  // Top and bottom together
+    [leftBanner, rightBanner]   // Left and right together
+];
 
 // Initialize
 function init() {
@@ -93,6 +105,11 @@ function init() {
     setTimeout(() => {
         introOverlay.classList.add('hidden');
     }, 4500);
+
+    // Show periodic subscription banner every 60 seconds
+    setInterval(() => {
+        showNextPeriodicBanner();
+    }, 20000); // Every 20 seconds
 }
 
 // Video Management
@@ -119,7 +136,16 @@ function previousVideo() {
 
 function handleVideoEnded() {
     if (AUTO_ADVANCE_VIDEO) {
-        nextVideo();
+        // Show subscription overlay
+        showSubscriptionOverlay();
+
+        // Wait 3 seconds, then hide overlay and load next video
+        setTimeout(() => {
+            hideSubscriptionOverlay();
+            setTimeout(() => {
+                nextVideo();
+            }, 600); // Wait for fade out animation
+        }, 3000);
     }
 }
 
@@ -254,6 +280,39 @@ function hidePanel() {
     controlPanel.classList.add('hidden');
     togglePanelBtn.classList.remove('panel-open');
 }
+
+function showSubscriptionOverlay() {
+    subscriptionOverlay.classList.remove('hidden');
+    subscriptionOverlay.classList.add('show');
+}
+
+function hideSubscriptionOverlay() {
+    subscriptionOverlay.classList.remove('show');
+    setTimeout(() => {
+        subscriptionOverlay.classList.add('hidden');
+    }, 600); // Wait for fade out animation
+}
+
+function showNextPeriodicBanner() {
+    // Get the current banner group (either [top, bottom] or [left, right])
+    const bannerGroup = bannerGroups[currentBannerGroupIndex];
+
+    // Show all banners in the current group simultaneously
+    bannerGroup.forEach(banner => {
+        banner.classList.add('show');
+    });
+
+    // Auto-hide after 5 seconds
+    setTimeout(() => {
+        bannerGroup.forEach(banner => {
+            banner.classList.remove('show');
+        });
+    }, 5000);
+
+    // Move to next banner group for next time (alternate between the two groups)
+    currentBannerGroupIndex = (currentBannerGroupIndex + 1) % bannerGroups.length;
+}
+
 
 function updateStatus(message, type) {
     const statusText = statusIndicator.querySelector('span');
