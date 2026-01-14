@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Immersive fullscreen video experience with background music">
+    <title>Ambient Video Player</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="video-container">
+        <video id="mainVideo" autoplay loop playsinline>
+            <source src="" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="video-overlay"></div>
+    </div>
+
+    <!-- YouTube Music Player (Hidden) -->
+    <div id="youtube-player"></div>
+
+    <!-- Control Panel -->
+    <div class="control-panel hidden" id="controlPanel">
+        <div class="control-header">
+            <h1>Ambient Experience</h1>
+            <button class="minimize-btn" id="minimizeBtn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+            </button>
+        </div>
+
+        <div class="control-section">
+            <h3>Video Controls</h3>
+            <div class="button-group">
+                <button class="control-btn" id="prevVideo">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="19 20 9 12 19 4 19 20"></polygon>
+                        <line x1="5" y1="19" x2="5" y2="5"></line>
+                    </svg>
+                    Previous
+                </button>
+                <button class="control-btn" id="nextVideo">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="5 4 15 12 5 20 5 4"></polygon>
+                        <line x1="19" y1="19" x2="19" y2="5"></line>
+                    </svg>
+                    Next
+                </button>
+            </div>
+            <div class="volume-control">
+                <label for="videoVolume">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                    </svg>
+                </label>
+                <input type="range" id="videoVolume" min="0" max="100" value="100" class="volume-slider">
+                <span id="videoVolumeValue">100%</span>
+            </div>
+        </div>
+
+        <div class="control-section">
+            <h3>Music Controls</h3>
+            <div class="button-group">
+                <button class="control-btn" id="playMusic">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                    </svg>
+                    Play Music
+                </button>
+                <button class="control-btn" id="pauseMusic">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="6" y1="4" x2="6" y2="20"></line>
+                        <line x1="18" y1="4" x2="18" y2="20"></line>
+                    </svg>
+                    Pause Music
+                </button>
+            </div>
+            <div class="volume-control">
+                <label for="musicVolume">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                    </svg>
+                </label>
+                <input type="range" id="musicVolume" min="0" max="100" value="50" class="volume-slider">
+                <span id="volumeValue">50%</span>
+            </div>
+        </div>
+
+        <div class="control-section">
+            <h3>Configuration</h3>
+            <div class="config-info">
+                <p class="info-text">Edit <code>app.js</code> to add your videos and YouTube playlist</p>
+                <div class="info-items">
+                    <div class="info-item">
+                        <span class="label">Videos:</span>
+                        <span class="value" id="videoCount">0</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Current:</span>
+                        <span class="value" id="currentVideo">-</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toggle Button -->
+    <button class="toggle-panel-btn" id="togglePanelBtn">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+    </button>
+
+    <!-- Status Indicator -->
+    <div class="status-indicator" id="statusIndicator">
+        <div class="status-dot"></div>
+        <span>Loading...</span>
+    </div>
+
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
